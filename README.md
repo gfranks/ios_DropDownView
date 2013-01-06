@@ -2,6 +2,8 @@ DropDownView
 ============
 
 DropDownView from top of device for user input and notifications with lots of goodies. Inspired by UIAlertView, somewhat.
+This DropDownView is supported for both the iPhone and iPad (iOS 4+ but iOS 5.x SDK must be used) and also supports ARC. 
+The view is positioned centered along the Y-axis.
 
 Send me an email at lgfz71@gmail.com if you have any feedback or would like to become a contributor.
 
