@@ -50,7 +50,7 @@
     // this is to display the DropDownView, you should pass the superview which will contain the DropDownView, here
     // you also may choose to set a timer, if timer is set to YES but a duration of ZERO is given, duration of 5 sec will be used
     // if no button titles are given and timer is not used, a timer will automatically be set with a duration of 5 sec
-    [self.dropDownView showDropDownViewFromSuperview:self.view withTimer:YES forDurationOrZero:10];
+    [self.dropDownView showDropDownViewFromSuperview:self.view withTimer:NO forDurationOrZero:0];
     
     // or you may use
     //    [self.dropDownView show:self.view];
