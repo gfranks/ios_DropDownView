@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DropDownView.h"
 
-@interface DropDownViewViewController : UIViewController
+@interface DropDownViewViewController : UIViewController <DropDownViewDelegate>
+
+@property (strong, nonatomic) DropDownView *dropDownView;
 
 @end
