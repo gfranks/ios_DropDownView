@@ -413,7 +413,7 @@
     [self.textField1 setDelegate:self];
     
     self.textFieldShadow = [[UIImageView alloc] initWithFrame:CGRectMake(kSubViewFrameOriginX,
-                                                                         kTextFieldFrameSizeHeight,
+                                                                         kTextFieldFrameSizeHeight - 1,
                                                                          kViewFrameSizeWidth,
                                                                          kTextFieldShadowHeight)];
     [self.textFieldShadow setImage:textFieldDropShadow];
@@ -456,7 +456,7 @@
     [self.textFieldSeperator setAlpha:0.50];
     
     self.textFieldShadow = [[UIImageView alloc] initWithFrame:CGRectMake(kSubViewFrameOriginX,
-                                                                         kTextFieldFrameSizeHeight*2,
+                                                                         (kTextFieldFrameSizeHeight*2) - 1,
                                                                          kViewFrameSizeWidth,
                                                                          kTextFieldShadowHeight)];
     [self.textFieldShadow setImage:textFieldDropShadow];
