@@ -27,6 +27,9 @@
  
      // also be sure to set a button background or one will not be used
      [self.dropDownView setButtonBackground:[UIImage imageNamed:@"map_searchhere_reset_btn"]];
+     
+     // also be sure to set a drop shadow for the textfield if used
+     [self.dropDownView setTextFieldDropShadow:[UIImage imageNamed:@"dropshadow"]];
  
      // set a gesture recognizer to dismiss view if DropDownView is tapped
      [self.dropDownView setGestureRecognizerForDismissal];
@@ -90,29 +93,30 @@ typedef NS_ENUM(NSInteger, DropDownViewStyle) {
 @end
 
 
-@interface DropDownView : UIViewController <UITextFieldDelegate, UIGestureRecognizerDelegate>
+@interface DropDownView : UIView <UITextFieldDelegate, UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) id<DropDownViewDelegate> delegate;
 
+@property (strong, nonatomic) UIView                 *view;
 @property (strong, nonatomic) UIView                 *superView;
 @property (strong, nonatomic) NSTimer                *dropDownViewTimer;
 @property (nonatomic)         NSInteger               dropDownViewTimerDuration;
 @property (strong, nonatomic) UITapGestureRecognizer *dropDownViewestureRecognizer;
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *messageLabel;
+@property (strong, nonatomic) UILabel *titleLabel;
+@property (strong, nonatomic) UILabel *messageLabel;
 
-@property (weak, nonatomic) IBOutlet DropDownViewIndentedTextField *defaultTextfield;
-@property (weak, nonatomic) IBOutlet DropDownViewIndentedTextField *loginTextfield;
-@property (weak, nonatomic) IBOutlet DropDownViewIndentedTextField *passwordTextfield;
+@property (strong, nonatomic) DropDownViewIndentedTextField *textField1;
+@property (strong, nonatomic) DropDownViewIndentedTextField *textField2;
 
-@property (weak, nonatomic) IBOutlet UIView  *defaultTextfieldContainerView;
-@property (weak, nonatomic) IBOutlet UIView  *loginAndPasswordTextfieldContainerView;
 @property (strong, nonatomic)        UIView  *buttonContainerView;
 @property (strong, nonatomic) NSMutableArray *buttonTitles;
 
-@property (strong, nonatomic)        UIImageView *backgroundImageView;
-@property (weak, nonatomic) IBOutlet UIImageView *bottomDividerImageView;
+@property (strong, nonatomic) UIImageView *textFieldShadow;
+@property (strong, nonatomic) UIImageView *textFieldSeperator;
+@property (strong, nonatomic) UIImageView *backgroundImageView;
+@property (strong, nonatomic) UIImageView *topDividerImageView;
+@property (strong, nonatomic) UIImageView *bottomDividerImageView;
 
 @property (nonatomic) NSInteger tag;
 
@@ -128,6 +132,9 @@ typedef NS_ENUM(NSInteger, DropDownViewStyle) {
 
 /* Set a new button background image for the DropDownView */
 - (void)setButtonBackground:(UIImage *)backgroundImage;
+
+/* Set a drop shadow image for textfields for the DropDownView */
+- (void)setTextFieldDropShadow:(UIImage *)dropShadowImage;
 
 /* Set a UIGestureRecognizer to DropDownView to dismiss view if clicked */
 - (void)setGestureRecognizerForDismissal;

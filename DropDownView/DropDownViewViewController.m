@@ -32,7 +32,7 @@
 
 - (void)showDropDownView {
     self.dropDownView = [[DropDownView alloc] initWithTitle:@"Sample"
-                                          withDropDownStyle:DropDownViewStylePlainTextInput //supply style here, you can change this after initilization
+                                          withDropDownStyle:DropDownViewStyleLoginAndPasswordInput //supply style here, you can change this after initilization
                                           cancelButtonTitle:@"Dismiss"
                                           otherButtonTitles:@"OK", nil];
     
@@ -43,6 +43,9 @@
     
     // also be sure to set a button background or one will not be used
     [self.dropDownView setButtonBackground:[UIImage imageNamed:@"map_searchhere_reset_btn"]];
+    
+    // also be sure to set a drop shadow for the textfield if used
+    [self.dropDownView setTextFieldDropShadow:[UIImage imageNamed:@"dropshadow"]];
     
     // set a gesture recognizer to dismiss view if DropDownView is tapped
     [self.dropDownView setGestureRecognizerForDismissal];
@@ -64,14 +67,6 @@
     UITextField *textField1 = [dropDownView textFieldAtIndex:0];
     UITextField *textField2 = [dropDownView textFieldAtIndex:1];
     
-    if (textField1) {
-        NSLog(@"Value from textfield1: %@", [textField1 text]);
-    }
-    
-    if (textField1) {
-        NSLog(@"Value from textfield2: %@", [textField2 text]);
-    }
-    
     [dropDownView dismiss];
 }
 
@@ -87,15 +82,8 @@
     UITextField *textField1 = [dropDownView textFieldAtIndex:0];
     UITextField *textField2 = [dropDownView textFieldAtIndex:1];
     
-    if (textField1) {
-        NSLog(@"Value from textfield1: %@", [textField1 text]);
-    }
-    
-    if (textField1) {
-        NSLog(@"Value from textfield2: %@", [textField2 text]);
-    }
-    
     // be sure to nil out the DropDownView property declared
+    self.dropDownView = nil;
 }
 
 @end

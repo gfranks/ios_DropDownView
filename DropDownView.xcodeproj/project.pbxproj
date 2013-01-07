@@ -25,7 +25,6 @@
 		688E0993169A14B500453A69 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 688E0991169A14B500453A69 /* InfoPlist.strings */; };
 		688E0996169A14B500453A69 /* DropDownViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 688E0995169A14B500453A69 /* DropDownViewTests.m */; };
 		688E09A8169A153800453A69 /* DropDownView.m in Sources */ = {isa = PBXBuildFile; fileRef = 688E09A6169A153800453A69 /* DropDownView.m */; };
-		688E09A9169A153800453A69 /* DropDownView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 688E09A7169A153800453A69 /* DropDownView.xib */; };
 		688E09AB169A158800453A69 /* dropshadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 688E09AA169A158800453A69 /* dropshadow.png */; };
 /* End PBXBuildFile section */
 
@@ -65,7 +64,6 @@
 		688E0995169A14B500453A69 /* DropDownViewTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DropDownViewTests.m; sourceTree = "<group>"; };
 		688E09A5169A153800453A69 /* DropDownView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropDownView.h; sourceTree = "<group>"; };
 		688E09A6169A153800453A69 /* DropDownView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropDownView.m; sourceTree = "<group>"; };
-		688E09A7169A153800453A69 /* DropDownView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DropDownView.xib; sourceTree = "<group>"; };
 		688E09AA169A158800453A69 /* dropshadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dropshadow.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -177,7 +175,6 @@
 			children = (
 				688E09A5169A153800453A69 /* DropDownView.h */,
 				688E09A6169A153800453A69 /* DropDownView.m */,
-				688E09A7169A153800453A69 /* DropDownView.xib */,
 			);
 			name = DropDownView;
 			sourceTree = "<group>";
@@ -260,7 +257,6 @@
 				688E0978169A14B500453A69 /* Default-568h@2x.png in Resources */,
 				688E097B169A14B500453A69 /* MainStoryboard_iPhone.storyboard in Resources */,
 				688E097E169A14B500453A69 /* MainStoryboard_iPad.storyboard in Resources */,
-				688E09A9169A153800453A69 /* DropDownView.xib in Resources */,
 				688E09AB169A158800453A69 /* dropshadow.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -484,6 +480,7 @@
 				688E099B169A14B500453A69 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		688E099C169A14B500453A69 /* Build configuration list for PBXNativeTarget "DropDownViewTests" */ = {
 			isa = XCConfigurationList;
@@ -492,6 +489,7 @@
 				688E099E169A14B500453A69 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

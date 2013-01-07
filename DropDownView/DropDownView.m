@@ -11,32 +11,49 @@
 #define kButtonWidth                   84
 #define kButtonHeight                  32
 
+#define kTitleLabelFrameOriginY        8
+#define kTitleLabelFrameSizeHeight     21
+#define kMessageLabelFrameOriginY      29
+#define kMessageLabelFrameSizeHeight   60
+
+#define kTextFieldFrameOriginY         39
+#define kTextFieldFrameSizeHeight      36
+#define kTextFieldShadowHeight         13
+
+#define kViewFrameSizeWidth            280
+
 #define kStartYButton                  5
 #define kStartXOneButton               118
 #define kStartXTwoButton               65
 #define kStartXThreeButton             20
 
 #define kButtonOffsetOneButton         0
-#define kButtonOffestTwoButton         22
-#define kButtonOffsetThreeButton       14
+#define kButtonOffestTwoButtoniPhone   22
+#define kButtonOffestTwoButtoniPad     32
+#define kButtonOffsetThreeButtoniPhone 14
+#define kButtonOffsetThreeButtoniPad   35
 
 #define kButtonContainerViewHeight     45
 
 #define kSubViewFrameOriginX           0
-#define kMainViewFrameSizeWidth        320
-#define kMainViewFrameSizeHeight       135
+#define kMainViewFrameSizeWidthiPhone  320
+#define kMainViewFrameSizeWidthiPad    450
+#define kMainViewFrameSizeHeight       138
 #define kBackgroundViewFrameOriginY    2
-#define kBackgroundViewFrameSizeHeight 131
+#define kBackgroundViewFrameSizeHeight 134
 
-#define kBottomDividerImageViewOriginY     134
-#define kBottomDividerImageViewFrameHeight 1
+#define kBottomDividerImageViewOriginY 135
+#define kDividerImageViewFrameHeight   1
 
 #define kHeightDisplacementForNoButtons    35
 #define kHeightDisplacementForStyleLoginAndPasswordInput 27
 
 @interface DropDownView () {
+    BOOL hasTitle;
     CGFloat mainViewFrameOriginY;
+    CGFloat mainViewFrameSizeWidth;
     DropDownViewStyle style;
+    UIImage *textFieldDropShadow;
 }
 
 // if one is not set, default will be used
@@ -47,11 +64,14 @@
 
 @implementation DropDownView
 
+@synthesize view;
 @synthesize titleLabel;
 @synthesize messageLabel;
-@synthesize defaultTextfield, loginTextfield, passwordTextfield;
-@synthesize defaultTextfieldContainerView, loginAndPasswordTextfieldContainerView;
+@synthesize textField1, textField2;
+@synthesize textFieldShadow;
+@synthesize textFieldSeperator;
 @synthesize backgroundImageView;
+@synthesize topDividerImageView;
 @synthesize bottomDividerImageView;
 @synthesize buttonContainerView;
 @synthesize buttonTitles;
@@ -64,14 +84,19 @@
 @synthesize hasButtons;
 
 -( id)init {
-    return [self initWithNibName:kDropDownViewNibName bundle:nil];
-}
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super init];
     if (self) {
-        // Custom initialization
+        if ([self isIPad]) {
+            mainViewFrameSizeWidth = kMainViewFrameSizeWidthiPad;
+        } else {
+            mainViewFrameSizeWidth = kMainViewFrameSizeWidthiPhone;
+        }
+        
+        self.view = [[UIView alloc] initWithFrame:CGRectMake(0,
+                                                             0,
+                                                             mainViewFrameSizeWidth,
+                                                             kMainViewFrameSizeHeight)];
+        [self.view setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.80]];
     }
     return self;
 }
@@ -85,8 +110,7 @@
             style = DropDownViewStyleDefault;
         }
         
-        [self.view addSubview:self.titleLabel];
-        [self.titleLabel setText:title];
+        [self addTitleLabel:title];
     }
     
     self.buttonTitles = [[NSMutableArray alloc] init];
@@ -118,9 +142,7 @@
     self = [self init];
     if (self) {
         style = DropDownViewStyleDefault;
-        
-        [self.view addSubview:self.titleLabel];
-        [self.titleLabel setText:title];
+        [self addTitleLabel:title];
     }
     
     self.buttonTitles = [[NSMutableArray alloc] init];
@@ -148,43 +170,11 @@
     return self;
 }
 
-- (void) viewDidLoad {
-    [super viewDidLoad];
-}
-
-#pragma mark - Memory management methods
-
-- (void)viewDidUnload {
-    self.titleLabel        = nil;
-    self.messageLabel      = nil;
-    self.defaultTextfield  = nil;
-    self.loginTextfield    = nil;
-    self.passwordTextfield = nil;
-    self.defaultTextfieldContainerView          = nil;
-    self.loginAndPasswordTextfieldContainerView = nil;
-    self.backgroundImageView    = nil;
-    self.bottomDividerImageView = nil;
-    self.buttonContainerView    = nil;
-    self.buttonTitles = nil;
-    self.delegate     = nil;
-    self.dropDownViewTimer = nil;
-    
-    if (self.dropDownViewestureRecognizer) {
-        [self.view removeGestureRecognizer:self.dropDownViewestureRecognizer];
-        self.dropDownViewestureRecognizer = nil;
-    }
-    
-    [super viewDidUnload];
-}
-
 #pragma mark - Class methods
 
 - (void)setDropDownViewStyle:(DropDownViewStyle)dropDownViewStyle {
     style = dropDownViewStyle;
-    [self.backgroundImageView removeFromSuperview];
-    [self.buttonContainerView removeFromSuperview];
-    self.backgroundImageView = nil;
-    self.buttonContainerView = nil;
+    [self checkSubviewsForRemoval];
     
     [self conformToStyle];
     [self addButtonsToView];
@@ -195,6 +185,12 @@
     [self.buttonContainerView removeFromSuperview];
     self.buttonContainerView = nil;
     [self addButtonsToView];
+}
+
+- (void)setTextFieldDropShadow:(UIImage *)dropShadowImage {
+    if (self.textFieldShadow) {
+        [self.textFieldShadow setImage:dropShadowImage];
+    }
 }
 
 - (void)setGestureRecognizerForDismissal {
@@ -264,15 +260,11 @@
     switch (style) {
         case DropDownViewStylePlainTextInput:
         case DropDownViewStyleSecureTextInput:
-            if (index == 0) {
-                textfield = defaultTextfield;
-            }
-            break;
         case DropDownViewStyleLoginAndPasswordInput:
             if (index == 0) {
-                textfield = loginTextfield;
+                textfield = self.textField1;
             } else if (index == 1) {
-                textfield = passwordTextfield;
+                textfield = self.textField2;
             }
             break;
         default:
@@ -284,10 +276,8 @@
 
 - (BOOL)isValidEmail {
     NSString *text;
-    if (style == DropDownViewStylePlainTextInput) {
-        text = [defaultTextfield text];
-    } else if (style == DropDownViewStyleLoginAndPasswordInput) {
-        text = [loginTextfield text];
+    if (style == DropDownViewStylePlainTextInput || style == DropDownViewStyleLoginAndPasswordInput) {
+        text = [self.textField1 text];
     }
     
     NSString *expression = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
@@ -313,55 +303,175 @@
 
 #pragma mark - Style setup private methods 
 
-- (void)conformToStyle {
-    /* DO NOT CHANGE THE ORDERING OF VIEWS ADDED TO SUPERVIEW */
-    self.backgroundImageView = [[UIImageView alloc] init];
-    [self.backgroundImageView setBackgroundColor:[UIColor scrollViewTexturedBackgroundColor]];
-    [self.backgroundImageView setAlpha:0.90];
-    [self.view addSubview:self.backgroundImageView];
-    [self.view bringSubviewToFront:self.titleLabel];
-    
+- (void)setupSubviews {
     switch (style) {
         case DropDownViewStyleDefault:
+        {
+            [self addMessageLabel:@""];
+            break;
+        }
         case DropDownViewStyleSecureTextInput:
+        {
+            [self addTextFieldWithSecureInput:YES];
+            break;
+        }
         case DropDownViewStylePlainTextInput:
         {
-            mainViewFrameOriginY = 0 - kMainViewFrameSizeHeight;
-            [self.loginAndPasswordTextfieldContainerView setHidden:YES];
-            [self setMainViewFrameWithDisplacement:NO];
-            [self setBackgroundViewFrameWithDisplacement:NO];
-            
-            if (style == DropDownViewStyleDefault) {
-                [self.defaultTextfieldContainerView setHidden:YES];
-                [self.messageLabel setHidden:NO];
-                [self.view bringSubviewToFront:self.messageLabel];
-                [self.view addSubview:self.messageLabel];
-            } else {
-                [self.defaultTextfieldContainerView setHidden:NO];
-                [self.messageLabel setHidden:YES];
-                [self.defaultTextfield setSecureTextEntry:(style == DropDownViewStyleSecureTextInput ? YES : NO)];
-                [self.view bringSubviewToFront:self.defaultTextfieldContainerView];
-                [self.view addSubview:self.defaultTextfieldContainerView];
-            }
+            [self addTextFieldWithSecureInput:NO];
             break;
         }
         case DropDownViewStyleLoginAndPasswordInput:
         {
-            mainViewFrameOriginY = 0 - (kMainViewFrameSizeHeight + kHeightDisplacementForStyleLoginAndPasswordInput);
-            [self.messageLabel setHidden:YES];
-            [self.defaultTextfieldContainerView setHidden:YES];
-            [self setMainViewFrameWithDisplacement:YES];
-            [self setBackgroundViewFrameWithDisplacement:YES];
-            [self updateBottomDividerImageViewFrameWithDisplacement:YES];
-            
-            [self.loginAndPasswordTextfieldContainerView setHidden:NO];
-            [self.view bringSubviewToFront:self.loginAndPasswordTextfieldContainerView];
-            [self.view addSubview:self.loginAndPasswordTextfieldContainerView];
+            [self addLoginAndPasswordInput];
             break;
         }
         default:
             break;
     }
+}
+
+- (void)addTitleLabel:(NSString*)title {
+    if (title) {
+        hasTitle = YES;
+        self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake([self getCenteredXPosition],
+                                                                    kTitleLabelFrameOriginY,
+                                                                    kViewFrameSizeWidth,
+                                                                    kTitleLabelFrameSizeHeight)];
+        [self.titleLabel setText:title];
+        [self.titleLabel setTextColor:[UIColor whiteColor]];
+        [self.titleLabel setShadowColor:[UIColor darkTextColor]];
+        [self.titleLabel setShadowOffset:CGSizeMake(1, 1)];
+        [self.titleLabel setBackgroundColor:[UIColor clearColor]];
+        [self.titleLabel setTextAlignment:NSTextAlignmentCenter];
+        [self.view addSubview:self.titleLabel];
+    } else {
+        hasTitle = NO;
+    }
+}
+
+- (void)addMessageLabel:(NSString*)message {
+    self.messageLabel = [[UILabel alloc] initWithFrame:CGRectMake([self getCenteredXPosition],
+                                                                  kMessageLabelFrameOriginY - (hasTitle ? 0 : kTitleLabelFrameSizeHeight),
+                                                                  kViewFrameSizeWidth,
+                                                                  kMessageLabelFrameSizeHeight)];
+    [self.messageLabel setText:message];
+    [self.messageLabel setTextColor:[UIColor whiteColor]];
+    [self.messageLabel setShadowColor:[UIColor darkTextColor]];
+    [self.messageLabel setShadowOffset:CGSizeMake(1, 1)];
+    [self.messageLabel setBackgroundColor:[UIColor clearColor]];
+    [self.messageLabel setTextAlignment:NSTextAlignmentCenter];
+    [self.view addSubview:self.messageLabel];
+}
+
+- (void)addTextFieldWithSecureInput:(BOOL)hasSecureInput {
+    self.textField1 = [[DropDownViewIndentedTextField alloc] initWithFrame:CGRectMake([self getCenteredXPosition],
+                                                                                      kTextFieldFrameOriginY - (hasTitle ? 0 : kTitleLabelFrameSizeHeight),
+                                                                                      kViewFrameSizeWidth,
+                                                                                      kTextFieldFrameSizeHeight)];
+    [self.textField1 setBorderStyle:UITextBorderStyleNone];
+    [self.textField1 setBackgroundColor:[UIColor whiteColor]];
+    [self.textField1 setFont:[UIFont systemFontOfSize:16.0]];
+    [self.textField1 setDelegate:self];
+    
+    self.textFieldShadow = [[UIImageView alloc] initWithFrame:CGRectMake([self getCenteredXPosition],
+                                                                         kTextFieldFrameOriginY + kTextFieldFrameSizeHeight - (hasTitle ? 0 : kTitleLabelFrameSizeHeight),
+                                                                         kViewFrameSizeWidth,
+                                                                         kTextFieldShadowHeight)];
+    [self.textFieldShadow setImage:textFieldDropShadow];
+    
+    [self.view addSubview:self.textField1];
+    [self.view bringSubviewToFront:self.textField1];
+}
+
+- (void)addLoginAndPasswordInput {
+    self.textField1 = [[DropDownViewIndentedTextField alloc] initWithFrame:CGRectMake([self getCenteredXPosition],
+                                                                                      kTextFieldFrameOriginY - (hasTitle ? 0 : kTitleLabelFrameSizeHeight),
+                                                                                      kViewFrameSizeWidth,
+                                                                                      kTextFieldFrameSizeHeight)];
+    [self.textField1 setBorderStyle:UITextBorderStyleNone];
+    [self.textField1 setBackgroundColor:[UIColor whiteColor]];
+    [self.textField1 setFont:[UIFont systemFontOfSize:16.0]];
+    [self.textField1 setPlaceholder:@"Enter email address"];
+    [self.textField1 setDelegate:self];
+    
+    self.textField2 = [[DropDownViewIndentedTextField alloc] initWithFrame:CGRectMake([self getCenteredXPosition],
+                                                                                      kTextFieldFrameOriginY + kTextFieldFrameSizeHeight - (hasTitle ? 0 : kTitleLabelFrameSizeHeight),
+                                                                                      kViewFrameSizeWidth,
+                                                                                      kTextFieldFrameSizeHeight)];
+    [self.textField2 setBorderStyle:UITextBorderStyleNone];
+    [self.textField2 setBackgroundColor:[UIColor whiteColor]];
+    [self.textField2 setFont:[UIFont systemFontOfSize:16.0]];
+    [self.textField2 setPlaceholder:@"Password"];
+    [self.textField2 setDelegate:self];
+    
+    self.textFieldSeperator = [[UIImageView alloc] initWithFrame:CGRectMake([self getCenteredXPosition],
+                                                                            kTextFieldFrameOriginY + kTextFieldFrameSizeHeight - (hasTitle ? 0 : kTitleLabelFrameSizeHeight),
+                                                                            kViewFrameSizeWidth,
+                                                                            1)];
+    [self.textFieldSeperator setBackgroundColor:[UIColor lightGrayColor]];
+    [self.textFieldSeperator setAlpha:0.50];
+    
+    self.textFieldShadow = [[UIImageView alloc] initWithFrame:CGRectMake([self getCenteredXPosition],
+                                                                         kTextFieldFrameOriginY + (kTextFieldFrameSizeHeight*2) - (hasTitle ? 0 : kTitleLabelFrameSizeHeight),
+                                                                         kViewFrameSizeWidth,
+                                                                         kTextFieldShadowHeight)];
+    [self.textFieldShadow setImage:textFieldDropShadow];
+    
+    [self.view addSubview:self.textField1];
+    [self.view addSubview:self.textField2];
+    [self.view addSubview:self.textFieldShadow];
+    [self.view addSubview:self.textFieldSeperator];
+}
+
+- (CGFloat)getCenteredXPosition {
+    return (self.view.frame.size.width/2) - (kViewFrameSizeWidth/2);
+}
+
+- (void)conformToStyle {
+    self.backgroundImageView = [[UIImageView alloc] init];
+    [self.backgroundImageView setBackgroundColor:[UIColor scrollViewTexturedBackgroundColor]];
+    [self.backgroundImageView setAlpha:0.90];
+    
+    [self.view addSubview:self.backgroundImageView];
+    [self.view bringSubviewToFront:self.titleLabel];
+
+    self.topDividerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kSubViewFrameOriginX + 1,
+                                                                             kSubViewFrameOriginX,
+                                                                             mainViewFrameSizeWidth,
+                                                                             kDividerImageViewFrameHeight)];
+    [self.topDividerImageView setBackgroundColor:[UIColor darkGrayColor]];
+    self.bottomDividerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kSubViewFrameOriginX,
+                                                                                kBottomDividerImageViewOriginY - (hasTitle ? 0 : kTitleLabelFrameSizeHeight),
+                                                                                mainViewFrameSizeWidth,
+                                                                                kDividerImageViewFrameHeight)];
+    [self.bottomDividerImageView setBackgroundColor:[UIColor darkGrayColor]];
+    
+//    [self.view addSubview:self.topDividerImageView];
+    [self.view addSubview:self.bottomDividerImageView];
+    [self.view bringSubviewToFront:self.bottomDividerImageView];
+    
+    BOOL shouldChangeMainViewOrigin;
+    switch (style) {
+        case DropDownViewStyleDefault:
+        case DropDownViewStyleSecureTextInput:
+        case DropDownViewStylePlainTextInput:
+            mainViewFrameOriginY = 0 - kMainViewFrameSizeHeight;
+            shouldChangeMainViewOrigin = NO;
+            break;
+        case DropDownViewStyleLoginAndPasswordInput:
+            mainViewFrameOriginY = 0 - (kMainViewFrameSizeHeight + kHeightDisplacementForStyleLoginAndPasswordInput);
+            shouldChangeMainViewOrigin = YES;
+            break;
+        default:
+            shouldChangeMainViewOrigin = NO;
+            break;
+    }
+    
+    [self setMainViewFrameWithDisplacement:shouldChangeMainViewOrigin];
+    [self setBackgroundViewFrameWithDisplacement:shouldChangeMainViewOrigin];
+    [self updateBottomDividerImageViewFrameWithDisplacement:shouldChangeMainViewOrigin];
+
+    [self setupSubviews];
 }
 
 #pragma mark - Button setup private methods
@@ -373,22 +483,34 @@
     
     self.buttonContainerView = [[UIView alloc] initWithFrame:CGRectMake(kSubViewFrameOriginX,
                                                                          self.view.frame.size.height - kButtonContainerViewHeight,
-                                                                         kMainViewFrameSizeWidth,
+                                                                         mainViewFrameSizeWidth,
                                                                          kButtonContainerViewHeight)];
     [self.buttonContainerView setBackgroundColor:[UIColor clearColor]];
     
     switch ([self.buttonTitles count]) {
+        case 0:
+            break;
         case 1:
-            startX       = kStartXOneButton;
+            startX       = (self.view.frame.size.width/2) - (kButtonWidth/2);
             buttonOffset = kButtonOffsetOneButton;
             break;
         case 2:
-            startX       = kStartXTwoButton;
-            buttonOffset = kButtonOffestTwoButton;
+            if ([self isIPad]) {
+                buttonOffset = kButtonOffestTwoButtoniPad;
+            } else {
+                buttonOffset = kButtonOffestTwoButtoniPhone;
+            }
+            startX       = (self.view.frame.size.width/2) - (buttonOffset/2) - kButtonWidth;
             break;
         case 3:
-            startX       = kStartXThreeButton;
-            buttonOffset = kButtonOffsetThreeButton;
+        default:
+            if ([self isIPad]) {
+                buttonOffset = kButtonOffsetThreeButtoniPad;
+            } else {
+                buttonOffset = kButtonOffsetThreeButtoniPhone;
+            }
+            
+            startX       = (self.view.frame.size.width/2) - (kButtonWidth/2) - buttonOffset - kButtonWidth;
             break;
     }
     
@@ -429,6 +551,12 @@
             bottomDividerImageViewY = kBottomDividerImageViewOriginY - kHeightDisplacementForNoButtons;
         }
         
+        if (!hasTitle) {
+            mainViewHeight -= kTitleLabelFrameSizeHeight;
+            backgroundViewHeight -= kTitleLabelFrameSizeHeight;
+            bottomDividerImageViewY -= kTitleLabelFrameSizeHeight;
+        }
+        
         [self.view setFrame:CGRectMake(self.view.frame.origin.x,
                                        0 - mainViewHeight,
                                        self.view.frame.size.width,
@@ -462,30 +590,32 @@
     return button;
 }
 
-
 #pragma mark - Update view frames private methods
 
 - (void)setMainViewFrameWithDisplacement:(BOOL)withDisplacement {
+    CGFloat frameHeight = (withDisplacement ? kHeightDisplacementForStyleLoginAndPasswordInput : 0) - (hasTitle ? 0 : kTitleLabelFrameSizeHeight);
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGFloat screenWidth = screenRect.size.width;
     [self.view setFrame:CGRectMake((screenWidth / 2) - (self.view.frame.size.width / 2),
                                    mainViewFrameOriginY,
-                                   kMainViewFrameSizeWidth,
-                                   kMainViewFrameSizeHeight + (withDisplacement ? kHeightDisplacementForStyleLoginAndPasswordInput : 0))];
+                                   mainViewFrameSizeWidth,
+                                   kMainViewFrameSizeHeight + frameHeight)];
 }
 
 - (void)setBackgroundViewFrameWithDisplacement:(BOOL)withDisplacement {
+    CGFloat frameHeight = (withDisplacement ? kHeightDisplacementForStyleLoginAndPasswordInput : 0) - (hasTitle ? 0 : kTitleLabelFrameSizeHeight);
     [self.backgroundImageView setFrame:CGRectMake(kSubViewFrameOriginX,
                                                   kBackgroundViewFrameOriginY,
-                                                  kMainViewFrameSizeWidth,
-                                                  kBackgroundViewFrameSizeHeight + (withDisplacement ? kHeightDisplacementForStyleLoginAndPasswordInput : 0))];
+                                                  mainViewFrameSizeWidth,
+                                                  kBackgroundViewFrameSizeHeight + frameHeight)];
 }
 
 - (void)updateBottomDividerImageViewFrameWithDisplacement:(BOOL)withDisplacement {
+    CGFloat frameOriginY = (withDisplacement ? kHeightDisplacementForStyleLoginAndPasswordInput : 0) - (hasTitle ? 0 : kTitleLabelFrameSizeHeight);
     [self.bottomDividerImageView setFrame:CGRectMake(kSubViewFrameOriginX,
-                                                     kBottomDividerImageViewOriginY + (withDisplacement ? kHeightDisplacementForStyleLoginAndPasswordInput : 0),
-                                                     kMainViewFrameSizeWidth,
-                                                     kBottomDividerImageViewFrameHeight)];
+                                                     kBottomDividerImageViewOriginY + frameOriginY,
+                                                     mainViewFrameSizeWidth,
+                                                     kDividerImageViewFrameHeight)];
 }
 
 #pragma mark - Timer update private method
@@ -506,14 +636,12 @@
         case DropDownViewStyleDefault:
             break;
         case DropDownViewStyleSecureTextInput:
-            [self.defaultTextfield setUserInteractionEnabled:enableInteraction];
-            break;
         case DropDownViewStylePlainTextInput:
-            [self.defaultTextfield setUserInteractionEnabled:enableInteraction];
+            [self.textField1 setUserInteractionEnabled:enableInteraction];
             break;
         case DropDownViewStyleLoginAndPasswordInput:
-            [self.loginTextfield setUserInteractionEnabled:enableInteraction];
-            [self.loginTextfield setUserInteractionEnabled:enableInteraction];
+            [self.textField1 setUserInteractionEnabled:enableInteraction];
+            [self.textField2 setUserInteractionEnabled:enableInteraction];
             break;
         default:
             break;
@@ -542,6 +670,70 @@
     }
     
     [self dismiss];
+}
+
+#pragma mark - Private methods
+
+- (BOOL)isIPad {
+    if ([[UIDevice currentDevice] respondsToSelector:@selector(userInterfaceIdiom)]){
+        //We can test if it's an iPad. Running iOS3.2+
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad){
+            return YES; //is an iPad
+        }
+        else{
+            return NO; //is an iPhone
+        }
+    }
+    else{
+        return NO; //does not respond to selector, therefore must be < iOS3.2, therefore is an iPhone
+    }
+}
+
+- (void)checkSubviewsForRemoval {
+    if (self.textField1) {
+        [self.textField1 removeFromSuperview];
+        self.textField1 = nil;
+    }
+    
+    if (self.textField2) {
+        [self.textField2 removeFromSuperview];
+        self.textField2 = nil;
+    }
+    
+    if (self.messageLabel) {
+        [self.messageLabel removeFromSuperview];
+        self.messageLabel = nil;
+    }
+    
+    if (self.textFieldShadow) {
+        [self.textFieldShadow removeFromSuperview];
+        self.textFieldShadow = nil;
+    }
+    
+    if (self.textFieldSeperator) {
+        [self.textFieldSeperator removeFromSuperview];
+        self.textFieldSeperator = nil;
+    }
+    
+    if (self.topDividerImageView) {
+        [self.topDividerImageView removeFromSuperview];
+        self.topDividerImageView = nil;
+    }
+    
+    if (self.bottomDividerImageView) {
+        [self.bottomDividerImageView removeFromSuperview];
+        self.bottomDividerImageView = nil;
+    }
+    
+    if (self.backgroundImageView) {
+        [self.backgroundImageView removeFromSuperview];
+        self.backgroundImageView = nil;
+    }
+    
+    if (self.buttonContainerView) {
+        [self.buttonContainerView removeFromSuperview];
+        self.buttonContainerView = nil;
+    }
 }
 
 @end
