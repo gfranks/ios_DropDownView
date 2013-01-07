@@ -23,6 +23,9 @@
      // you may set message label or textfield placeholders here
      [[self.dropDownView messageLabel] setText:@"Sample message displayed here"];
  
+     // you may add a message label with text input
+     [self.dropDownView setMessageForTextInput:@"Sample message here"];
+ 
      [self.dropDownView setDelegate:self];
  
      // also be sure to set a button background or one will not be used
@@ -129,6 +132,7 @@ typedef NS_ENUM(NSInteger, DropDownViewStyle) {
 /* Set a new button background image for the DropDownView */
 - (void)setButtonBackground:(UIImage *)backgroundImage;
 
+/* Set a message label to be displayed above text input */
 - (void)setMessageForTextInput:(NSString*)message;
 
 /* Set a UIGestureRecognizer to DropDownView to dismiss view if clicked */
