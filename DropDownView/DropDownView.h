@@ -10,34 +10,37 @@
  *************************** WHEN IMPLEMENTING, FOLOW THIS EXAMPLE *********************************
  
  // SUPPLE METHOD TO CREATE DropDownView, BE SURE TO IMPORT THIS CLASS AND SET AS DELEGATE IN HEADER FILE
- 
+     
  //declare DropDownView in header class as a property and synthesize (must be allocated for as long as view is shown to prevent EXC_BAD_ACCESS!)
  @property (strong, nonatomic) DropDownView *dropDownView;
- 
+     
  - (void)showDropDownView {
      self.dropDownView = [[DropDownView alloc] initWithTitle:@"Sample"
-                                           withDropDownStyle:DropDownViewStyleDefault //supply style here, you can change this after initilization
-                                           cancelButtonTitle:@"Dismiss"
-                                           otherButtonTitles:@"OK", nil];
- 
+     withDropDownStyle:DropDownViewStyleDefault //supply style here, you can change this after initilization
+     cancelButtonTitle:@"Dismiss"
+     otherButtonTitles:@"OK", nil];
+     
      // you may set message label or textfield placeholders here
      [[self.dropDownView messageLabel] setText:@"Sample message displayed here"];
- 
+     
+     // you may add a message label with text input
+     [self.dropDownView setMessageForTextInput:@"Sample message here"];
+     
      [self.dropDownView setDelegate:self];
- 
+     
      // also be sure to set a button background or one will not be used
      [self.dropDownView setButtonBackground:[UIImage imageNamed:@"map_searchhere_reset_btn"]];
- 
+     
      // set a gesture recognizer to dismiss view if DropDownView is tapped
      [self.dropDownView setGestureRecognizerForDismissal];
- 
+     
      // this is to display the DropDownView, you should pass the superview which will contain the DropDownView, here
      // you also may choose to set a timer, if timer is set to YES but a duration of ZERO is given, duration of 5 sec will be used
      // if no button titles are given and timer is not used, a timer will automatically be set with a duration of 5 sec
      [self.dropDownView showDropDownViewFromSuperview:self.view withTimer:YES forDurationOrZero:10];
- 
+     
      // or you may use
-//    [self.dropDownView show:self.view];
+     //    [self.dropDownView show:self.view];
  }
  
  // IMPLEMENT BELOW DELEGATE METHODS
@@ -47,7 +50,7 @@
      NSLog(@"Clicked button at index: %i", buttonIndex);
      UITextField *textField1 = [dropDownView textFieldAtIndex:0];
      UITextField *textField2 = [dropDownView textFieldAtIndex:1];
- 
+     
      [dropDownView dismiss];
  }
  
@@ -62,7 +65,7 @@
      NSLog(@"Finished hiding DropDownView");
      UITextField *textField1 = [dropDownView textFieldAtIndex:0];
      UITextField *textField2 = [dropDownView textFieldAtIndex:1];
- 
+     
      // be sure to nil out the DropDownView property declared
      self.dropDownView = nil;
  }
@@ -128,6 +131,9 @@ typedef NS_ENUM(NSInteger, DropDownViewStyle) {
 
 /* Set a new button background image for the DropDownView */
 - (void)setButtonBackground:(UIImage *)backgroundImage;
+
+/* Set a message label to be displayed above text input */
+- (void)setMessageForTextInput:(NSString*)message;
 
 /* Set a UIGestureRecognizer to DropDownView to dismiss view if clicked */
 - (void)setGestureRecognizerForDismissal;
