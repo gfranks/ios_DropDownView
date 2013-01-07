@@ -216,7 +216,7 @@
     
     [UIView animateWithDuration:1.0 animations:^{
         [self.view setFrame:CGRectMake(self.view.frame.origin.x,
-                                       -50,
+                                       0,
                                        self.view.frame.size.width,
                                        self.view.frame.size.height)];
     } completion:^(BOOL finished) {
