@@ -22,6 +22,10 @@
 
 #define kButtonContainerViewHeight     45
 
+#define kTextFieldContainerOriginY     39
+
+#define kWithMessageOriginYOffset      55
+
 #define kSubViewFrameOriginX           0
 #define kMainViewFrameSizeWidth        320
 #define kMainViewFrameSizeHeight       135
@@ -195,6 +199,43 @@
     [self.buttonContainerView removeFromSuperview];
     self.buttonContainerView = nil;
     [self addButtonsToView];
+}
+
+- (void)setMessageForTextInput:(NSString*)message {
+    [self.messageLabel setText:message];
+    [self.messageLabel setHidden:NO];
+    [self.view addSubview:self.messageLabel];
+    
+    if (style == DropDownViewStylePlainTextInput || style == DropDownViewStyleSecureTextInput || style == DropDownViewStyleLoginAndPasswordInput) {
+        [self.view setFrame:CGRectMake(self.view.frame.origin.x,
+                                       self.view.frame.origin.y,
+                                       self.view.frame.size.width,
+                                       self.view.frame.size.height+kWithMessageOriginYOffset)];
+        [self.backgroundImageView setFrame:CGRectMake(self.backgroundImageView.frame.origin.x,
+                                                      self.backgroundImageView.frame.origin.y,
+                                                      self.backgroundImageView.frame.size.width,
+                                                      self.backgroundImageView.frame.size.height+kWithMessageOriginYOffset)];
+        [self.bottomDividerImageView setFrame:CGRectMake(self.bottomDividerImageView.frame.origin.x,
+                                                         self.bottomDividerImageView.frame.origin.y+kWithMessageOriginYOffset,
+                                                         self.bottomDividerImageView.frame.size.width,
+                                                         self.bottomDividerImageView.frame.size.height)];
+        [self.buttonContainerView setFrame:CGRectMake(self.buttonContainerView.frame.origin.x,
+                                                      self.buttonContainerView.frame.origin.y+kWithMessageOriginYOffset,
+                                                      self.buttonContainerView.frame.size.width,
+                                                      self.buttonContainerView.frame.size.height)];
+        
+        if (style == DropDownViewStylePlainTextInput || style == DropDownViewStyleSecureTextInput) {
+            [self.defaultTextfieldContainerView setFrame:CGRectMake(self.defaultTextfieldContainerView.frame.origin.x,
+                                                                    kTextFieldContainerOriginY+kWithMessageOriginYOffset,
+                                                                    self.defaultTextfieldContainerView.frame.size.width,
+                                                                    self.defaultTextfieldContainerView.frame.size.height)];
+        } else if (style == DropDownViewStyleLoginAndPasswordInput) {
+            [self.loginAndPasswordTextfieldContainerView setFrame:CGRectMake(self.loginAndPasswordTextfieldContainerView.frame.origin.x,
+                                                                             kTextFieldContainerOriginY+kWithMessageOriginYOffset,
+                                                                             self.loginAndPasswordTextfieldContainerView.frame.size.width,
+                                                                             self.loginAndPasswordTextfieldContainerView.frame.size.height)];
+        }
+    }
 }
 
 - (void)setGestureRecognizerForDismissal {

@@ -32,12 +32,12 @@
 
 - (void)showDropDownView {
     self.dropDownView = [[DropDownView alloc] initWithTitle:@"Sample"
-                                          withDropDownStyle:DropDownViewStyleLoginAndPasswordInput //supply style here, you can change this after initilization
+                                          withDropDownStyle:DropDownViewStylePlainTextInput //supply style here, you can change this after initilization
                                           cancelButtonTitle:@"Dismiss"
                                           otherButtonTitles:@"OK", nil];
     
     // you may set message label or textfield placeholders here
-    [[self.dropDownView messageLabel] setText:@"Sample message displayed here"];
+    [self.dropDownView setMessageForTextInput:@"Message displayed here"];
     
     [self.dropDownView setDelegate:self];
     

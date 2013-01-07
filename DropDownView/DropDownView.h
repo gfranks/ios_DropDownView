@@ -129,6 +129,8 @@ typedef NS_ENUM(NSInteger, DropDownViewStyle) {
 /* Set a new button background image for the DropDownView */
 - (void)setButtonBackground:(UIImage *)backgroundImage;
 
+- (void)setMessageForTextInput:(NSString*)message;
+
 /* Set a UIGestureRecognizer to DropDownView to dismiss view if clicked */
 - (void)setGestureRecognizerForDismissal;
 
