@@ -8,42 +8,46 @@
 
 #import "DropDownView.h"
 
-#define kButtonWidth                   84
-#define kButtonHeight                  32
+#define kButtonWidth                    84
+#define kButtonHeight                   32
 
-#define kTitleLabelFrameOriginY        8
-#define kTitleLabelFrameSizeHeight     21
-#define kMessageLabelFrameOriginY      29
-#define kMessageLabelFrameSizeHeight   60
+#define kTitleLabelFrameOriginY         8
+#define kTitleLabelFrameSizeHeight      21
+#define kMessageLabelFrameOriginY       29
+#define kMessageLabelFrameSizeHeight    60
+#define kWithMessageOriginYOffset       55
 
-#define kTextFieldFrameOriginY         39
-#define kTextFieldFrameSizeHeight      36
-#define kTextFieldShadowHeight         13
+#define kTextFieldContainerOriginY      39
+#define kTextFieldContainerHeightSingle 57
+#define kTextFieldContainerHeightLogin  84
+#define kTextFieldFrameSizeHeight       36
+#define kTextFieldShadowHeight          13
+#define kTextFieldFrameOriginY          0
 
-#define kViewFrameSizeWidth            280
+#define kViewFrameSizeWidth             280
 
-#define kStartYButton                  5
-#define kStartXOneButton               118
-#define kStartXTwoButton               65
-#define kStartXThreeButton             20
+#define kStartYButton                   5
+#define kStartXOneButton                118
+#define kStartXTwoButton                65
+#define kStartXThreeButton              20
 
-#define kButtonOffsetOneButton         0
-#define kButtonOffestTwoButtoniPhone   22
-#define kButtonOffestTwoButtoniPad     32
-#define kButtonOffsetThreeButtoniPhone 14
-#define kButtonOffsetThreeButtoniPad   35
+#define kButtonOffsetOneButton          0
+#define kButtonOffestTwoButtoniPhone    22
+#define kButtonOffestTwoButtoniPad      32
+#define kButtonOffsetThreeButtoniPhone  14
+#define kButtonOffsetThreeButtoniPad    35
 
-#define kButtonContainerViewHeight     45
+#define kButtonContainerViewHeight      45
 
-#define kSubViewFrameOriginX           0
-#define kMainViewFrameSizeWidthiPhone  320
-#define kMainViewFrameSizeWidthiPad    450
-#define kMainViewFrameSizeHeight       138
-#define kBackgroundViewFrameOriginY    2
-#define kBackgroundViewFrameSizeHeight 134
+#define kSubViewFrameOriginX            0
+#define kMainViewFrameSizeWidthiPhone   320
+#define kMainViewFrameSizeWidthiPad     450
+#define kMainViewFrameSizeHeight        138
+#define kBackgroundViewFrameOriginY     2
+#define kBackgroundViewFrameSizeHeight  134
 
-#define kBottomDividerImageViewOriginY 135
-#define kDividerImageViewFrameHeight   1
+#define kBottomDividerImageViewOriginY  135
+#define kDividerImageViewFrameHeight    1
 
 #define kHeightDisplacementForNoButtons    35
 #define kHeightDisplacementForStyleLoginAndPasswordInput 27
@@ -67,6 +71,7 @@
 @synthesize view;
 @synthesize titleLabel;
 @synthesize messageLabel;
+@synthesize textFieldContainerView;
 @synthesize textField1, textField2;
 @synthesize textFieldShadow;
 @synthesize textFieldSeperator;
@@ -190,6 +195,36 @@
 - (void)setTextFieldDropShadow:(UIImage *)dropShadowImage {
     if (self.textFieldShadow) {
         [self.textFieldShadow setImage:dropShadowImage];
+    }
+}
+
+- (void)setMessageForTextInput:(NSString*)message {
+    if (style == DropDownViewStylePlainTextInput || style == DropDownViewStyleSecureTextInput || style == DropDownViewStyleLoginAndPasswordInput) {
+        [self addMessageLabel:message];
+        
+        [self.view setFrame:CGRectMake(self.view.frame.origin.x,
+                                       self.view.frame.origin.y,
+                                       self.view.frame.size.width,
+                                       self.view.frame.size.height+kWithMessageOriginYOffset)];
+        [self.backgroundImageView setFrame:CGRectMake(self.backgroundImageView.frame.origin.x,
+                                                      self.backgroundImageView.frame.origin.y,
+                                                      self.backgroundImageView.frame.size.width,
+                                                      self.backgroundImageView.frame.size.height+kWithMessageOriginYOffset)];
+        [self.bottomDividerImageView setFrame:CGRectMake(self.bottomDividerImageView.frame.origin.x,
+                                                         self.bottomDividerImageView.frame.origin.y+kWithMessageOriginYOffset,
+                                                         self.bottomDividerImageView.frame.size.width,
+                                                         self.bottomDividerImageView.frame.size.height)];
+        [self.buttonContainerView setFrame:CGRectMake(self.buttonContainerView.frame.origin.x,
+                                                      self.buttonContainerView.frame.origin.y+kWithMessageOriginYOffset,
+                                                      self.buttonContainerView.frame.size.width,
+                                                      self.buttonContainerView.frame.size.height)];
+        
+        if (style == DropDownViewStylePlainTextInput || style == DropDownViewStyleSecureTextInput || style == DropDownViewStyleLoginAndPasswordInput) {
+            [self.textFieldContainerView setFrame:CGRectMake(self.textFieldContainerView.frame.origin.x,
+                                                             self.textFieldContainerView.frame.origin.y+kWithMessageOriginYOffset,
+                                                             self.textFieldContainerView.frame.size.width,
+                                                             self.textFieldContainerView.frame.size.height)];
+        }
     }
 }
 
@@ -364,8 +399,12 @@
 }
 
 - (void)addTextFieldWithSecureInput:(BOOL)hasSecureInput {
-    self.textField1 = [[DropDownViewIndentedTextField alloc] initWithFrame:CGRectMake([self getCenteredXPosition],
-                                                                                      kTextFieldFrameOriginY - (hasTitle ? 0 : kTitleLabelFrameSizeHeight),
+    self.textFieldContainerView = [[UIView alloc] initWithFrame:CGRectMake([self getCenteredXPosition],
+                                                                           kTextFieldContainerOriginY - (hasTitle ? 0 : kTitleLabelFrameSizeHeight),
+                                                                           kViewFrameSizeWidth,
+                                                                           kTextFieldContainerHeightSingle)];
+    self.textField1 = [[DropDownViewIndentedTextField alloc] initWithFrame:CGRectMake(kSubViewFrameOriginX,
+                                                                                      kTextFieldFrameOriginY,
                                                                                       kViewFrameSizeWidth,
                                                                                       kTextFieldFrameSizeHeight)];
     [self.textField1 setBorderStyle:UITextBorderStyleNone];
@@ -373,19 +412,24 @@
     [self.textField1 setFont:[UIFont systemFontOfSize:16.0]];
     [self.textField1 setDelegate:self];
     
-    self.textFieldShadow = [[UIImageView alloc] initWithFrame:CGRectMake([self getCenteredXPosition],
-                                                                         kTextFieldFrameOriginY + kTextFieldFrameSizeHeight - (hasTitle ? 0 : kTitleLabelFrameSizeHeight),
+    self.textFieldShadow = [[UIImageView alloc] initWithFrame:CGRectMake(kSubViewFrameOriginX,
+                                                                         kTextFieldFrameSizeHeight,
                                                                          kViewFrameSizeWidth,
                                                                          kTextFieldShadowHeight)];
     [self.textFieldShadow setImage:textFieldDropShadow];
     
-    [self.view addSubview:self.textField1];
-    [self.view bringSubviewToFront:self.textField1];
+    [self.textFieldContainerView addSubview:self.textField1];
+    [self.textFieldContainerView addSubview:self.textFieldShadow];
+    [self.view addSubview:self.textFieldContainerView];
 }
 
 - (void)addLoginAndPasswordInput {
-    self.textField1 = [[DropDownViewIndentedTextField alloc] initWithFrame:CGRectMake([self getCenteredXPosition],
-                                                                                      kTextFieldFrameOriginY - (hasTitle ? 0 : kTitleLabelFrameSizeHeight),
+    self.textFieldContainerView = [[UIView alloc] initWithFrame:CGRectMake([self getCenteredXPosition],
+                                                                           kTextFieldContainerOriginY - (hasTitle ? 0 : kTitleLabelFrameSizeHeight),
+                                                                           kViewFrameSizeWidth,
+                                                                           kTextFieldContainerHeightLogin)];
+    self.textField1 = [[DropDownViewIndentedTextField alloc] initWithFrame:CGRectMake(kSubViewFrameOriginX,
+                                                                                      kTextFieldFrameOriginY,
                                                                                       kViewFrameSizeWidth,
                                                                                       kTextFieldFrameSizeHeight)];
     [self.textField1 setBorderStyle:UITextBorderStyleNone];
@@ -394,8 +438,8 @@
     [self.textField1 setPlaceholder:@"Enter email address"];
     [self.textField1 setDelegate:self];
     
-    self.textField2 = [[DropDownViewIndentedTextField alloc] initWithFrame:CGRectMake([self getCenteredXPosition],
-                                                                                      kTextFieldFrameOriginY + kTextFieldFrameSizeHeight - (hasTitle ? 0 : kTitleLabelFrameSizeHeight),
+    self.textField2 = [[DropDownViewIndentedTextField alloc] initWithFrame:CGRectMake(kSubViewFrameOriginX,
+                                                                                      kTextFieldFrameSizeHeight,
                                                                                       kViewFrameSizeWidth,
                                                                                       kTextFieldFrameSizeHeight)];
     [self.textField2 setBorderStyle:UITextBorderStyleNone];
@@ -404,23 +448,25 @@
     [self.textField2 setPlaceholder:@"Password"];
     [self.textField2 setDelegate:self];
     
-    self.textFieldSeperator = [[UIImageView alloc] initWithFrame:CGRectMake([self getCenteredXPosition],
-                                                                            kTextFieldFrameOriginY + kTextFieldFrameSizeHeight - (hasTitle ? 0 : kTitleLabelFrameSizeHeight),
+    self.textFieldSeperator = [[UIImageView alloc] initWithFrame:CGRectMake(kSubViewFrameOriginX,
+                                                                            kTextFieldFrameSizeHeight,
                                                                             kViewFrameSizeWidth,
                                                                             1)];
     [self.textFieldSeperator setBackgroundColor:[UIColor lightGrayColor]];
     [self.textFieldSeperator setAlpha:0.50];
     
-    self.textFieldShadow = [[UIImageView alloc] initWithFrame:CGRectMake([self getCenteredXPosition],
-                                                                         kTextFieldFrameOriginY + (kTextFieldFrameSizeHeight*2) - (hasTitle ? 0 : kTitleLabelFrameSizeHeight),
+    self.textFieldShadow = [[UIImageView alloc] initWithFrame:CGRectMake(kSubViewFrameOriginX,
+                                                                         kTextFieldFrameSizeHeight*2,
                                                                          kViewFrameSizeWidth,
                                                                          kTextFieldShadowHeight)];
     [self.textFieldShadow setImage:textFieldDropShadow];
     
-    [self.view addSubview:self.textField1];
-    [self.view addSubview:self.textField2];
-    [self.view addSubview:self.textFieldShadow];
-    [self.view addSubview:self.textFieldSeperator];
+    [self.textFieldContainerView addSubview:self.textField1];
+    [self.textFieldContainerView addSubview:self.textField2];
+    [self.textFieldContainerView addSubview:self.textFieldShadow];
+    [self.textFieldContainerView addSubview:self.textFieldSeperator];
+    
+    [self.view addSubview:self.textFieldContainerView];
 }
 
 - (CGFloat)getCenteredXPosition {
