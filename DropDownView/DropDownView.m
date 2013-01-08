@@ -390,6 +390,7 @@
                                                                   kViewFrameSizeWidth,
                                                                   kMessageLabelFrameSizeHeight)];
     [self.messageLabel setText:message];
+    [self.messageLabel setFont:[UIFont systemFontOfSize:14.0f]];
     [self.messageLabel setTextColor:[UIColor whiteColor]];
     [self.messageLabel setShadowColor:[UIColor darkTextColor]];
     [self.messageLabel setShadowOffset:CGSizeMake(1, 1)];

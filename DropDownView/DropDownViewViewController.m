@@ -32,18 +32,18 @@
 
 - (void)showDropDownView {
     self.dropDownView = [[DropDownView alloc] initWithTitle:@"Sample"
-                                          withDropDownStyle:DropDownViewStyleSecureTextInput //supply style here, you can change this after initilization
+                                          withDropDownStyle:DropDownViewStylePlainTextInput //supply style here, you can change this after initilization
                                           cancelButtonTitle:@"Dismiss"
                                           otherButtonTitles:@"OK", nil];
     
     // you may set message label or textfield placeholders here
 //    [[self.dropDownView messageLabel] setText:@"Sample message displayed here"];
-    [self.dropDownView setMessageForTextInput:@"Sample message here"];
+//    [self.dropDownView setMessageForTextInput:@"Sample message here"];
     
     [self.dropDownView setDelegate:self];
     
     // also be sure to set a button background or one will not be used
-    [self.dropDownView setButtonBackground:[UIImage imageNamed:@"map_searchhere_reset_btn"]];
+    [self.dropDownView setButtonBackground:[UIImage imageNamed:@"btn"]];
     
     // also be sure to set a drop shadow for the textfield if used
     [self.dropDownView setTextFieldDropShadow:[UIImage imageNamed:@"dropshadow"]];
