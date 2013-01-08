@@ -314,6 +314,7 @@
 						<string key="NSFrame">{{0, 132}, {320, 1}}</string>
 						<reference key="NSSuperview" ref="431764280"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<reference key="IBUIBackgroundColor" ref="1071765079"/>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>

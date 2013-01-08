@@ -42,7 +42,7 @@
     [self.dropDownView setDelegate:self];
     
     // also be sure to set a button background or one will not be used
-    [self.dropDownView setButtonBackground:[UIImage imageNamed:@"map_searchhere_reset_btn"]];
+    [self.dropDownView setButtonBackground:[UIImage imageNamed:@"btn"]];
     
     // set a gesture recognizer to dismiss view if DropDownView is tapped
     [self.dropDownView setGestureRecognizerForDismissal];

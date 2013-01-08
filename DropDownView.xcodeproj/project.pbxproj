@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		687EAA48169BA24900EDB171 /* btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 687EAA47169BA24900EDB171 /* btn.png */; };
 		688E0962169A14B400453A69 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 688E0961169A14B400453A69 /* UIKit.framework */; };
 		688E0964169A14B400453A69 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 688E0963169A14B400453A69 /* Foundation.framework */; };
 		688E0966169A14B400453A69 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 688E0965169A14B400453A69 /* CoreGraphics.framework */; };
@@ -40,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		687EAA47169BA24900EDB171 /* btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn.png; sourceTree = "<group>"; };
 		688E095D169A14B400453A69 /* DropDownView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DropDownView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		688E0961169A14B400453A69 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		688E0963169A14B400453A69 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -141,6 +143,7 @@
 		688E0968169A14B400453A69 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				687EAA47169BA24900EDB171 /* btn.png */,
 				688E09AA169A158800453A69 /* dropshadow.png */,
 				688E0969169A14B400453A69 /* DropDownView-Info.plist */,
 				688E096A169A14B400453A69 /* InfoPlist.strings */,
@@ -262,6 +265,7 @@
 				688E097E169A14B500453A69 /* MainStoryboard_iPad.storyboard in Resources */,
 				688E09A9169A153800453A69 /* DropDownView.xib in Resources */,
 				688E09AB169A158800453A69 /* dropshadow.png in Resources */,
+				687EAA48169BA24900EDB171 /* btn.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -484,6 +488,7 @@
 				688E099B169A14B500453A69 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		688E099C169A14B500453A69 /* Build configuration list for PBXNativeTarget "DropDownViewTests" */ = {
 			isa = XCConfigurationList;
@@ -492,6 +497,7 @@
 				688E099E169A14B500453A69 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
