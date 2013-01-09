@@ -193,8 +193,9 @@
 }
 
 - (void)setTextFieldDropShadow:(UIImage *)dropShadowImage {
+    textFieldDropShadow = dropShadowImage;
     if (self.textFieldShadow) {
-        [self.textFieldShadow setImage:dropShadowImage];
+        [self.textFieldShadow setImage:textFieldDropShadow];
     }
 }
 
