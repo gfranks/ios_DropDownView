@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		687EAA41169BA0B600EDB171 /* btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 687EAA40169BA0B600EDB171 /* btn.png */; };
 		688E0962169A14B400453A69 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 688E0961169A14B400453A69 /* UIKit.framework */; };
 		688E0964169A14B400453A69 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 688E0963169A14B400453A69 /* Foundation.framework */; };
 		688E0966169A14B400453A69 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 688E0965169A14B400453A69 /* CoreGraphics.framework */; };
@@ -27,6 +26,7 @@
 		688E0996169A14B500453A69 /* DropDownViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 688E0995169A14B500453A69 /* DropDownViewTests.m */; };
 		688E09A8169A153800453A69 /* DropDownView.m in Sources */ = {isa = PBXBuildFile; fileRef = 688E09A6169A153800453A69 /* DropDownView.m */; };
 		688E09AB169A158800453A69 /* dropshadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 688E09AA169A158800453A69 /* dropshadow.png */; };
+		68D8476C169DC21A00FED838 /* btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 68D8476B169DC21A00FED838 /* btn.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,7 +40,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		687EAA40169BA0B600EDB171 /* btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btn.png; path = ../../../../sources/ios_apartmentguide/Apartments/Apartments/Resources/btn.png; sourceTree = "<group>"; };
 		688E095D169A14B400453A69 /* DropDownView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DropDownView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		688E0961169A14B400453A69 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		688E0963169A14B400453A69 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -67,6 +66,7 @@
 		688E09A5169A153800453A69 /* DropDownView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropDownView.h; sourceTree = "<group>"; };
 		688E09A6169A153800453A69 /* DropDownView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropDownView.m; sourceTree = "<group>"; };
 		688E09AA169A158800453A69 /* dropshadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dropshadow.png; sourceTree = "<group>"; };
+		68D8476B169DC21A00FED838 /* btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,7 +141,7 @@
 		688E0968169A14B400453A69 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				687EAA40169BA0B600EDB171 /* btn.png */,
+				68D8476B169DC21A00FED838 /* btn.png */,
 				688E09AA169A158800453A69 /* dropshadow.png */,
 				688E0969169A14B400453A69 /* DropDownView-Info.plist */,
 				688E096A169A14B400453A69 /* InfoPlist.strings */,
@@ -261,7 +261,7 @@
 				688E097B169A14B500453A69 /* MainStoryboard_iPhone.storyboard in Resources */,
 				688E097E169A14B500453A69 /* MainStoryboard_iPad.storyboard in Resources */,
 				688E09AB169A158800453A69 /* dropshadow.png in Resources */,
-				687EAA41169BA0B600EDB171 /* btn.png in Resources */,
+				68D8476C169DC21A00FED838 /* btn.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

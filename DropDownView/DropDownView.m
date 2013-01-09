@@ -464,8 +464,8 @@
     
     [self.textFieldContainerView addSubview:self.textField1];
     [self.textFieldContainerView addSubview:self.textField2];
-    [self.textFieldContainerView addSubview:self.textFieldShadow];
     [self.textFieldContainerView addSubview:self.textFieldSeperator];
+    [self.textFieldContainerView addSubview:self.textFieldShadow];
     
     [self.view addSubview:self.textFieldContainerView];
 }
@@ -737,29 +737,14 @@
 }
 
 - (void)checkSubviewsForRemoval {
-    if (self.textField1) {
-        [self.textField1 removeFromSuperview];
-        self.textField1 = nil;
-    }
-    
-    if (self.textField2) {
-        [self.textField2 removeFromSuperview];
-        self.textField2 = nil;
-    }
-    
     if (self.messageLabel) {
         [self.messageLabel removeFromSuperview];
         self.messageLabel = nil;
     }
     
-    if (self.textFieldShadow) {
-        [self.textFieldShadow removeFromSuperview];
-        self.textFieldShadow = nil;
-    }
-    
-    if (self.textFieldSeperator) {
-        [self.textFieldSeperator removeFromSuperview];
-        self.textFieldSeperator = nil;
+    if (self.textFieldContainerView) {
+        [self.textFieldContainerView removeFromSuperview];
+        self.textFieldContainerView = nil;
     }
     
     if (self.topDividerImageView) {
