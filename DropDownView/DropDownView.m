@@ -629,7 +629,7 @@
     [button setTag:buttonTag];
     [button addTarget:self action:@selector(didSelectButton:) forControlEvents:UIControlEventTouchUpInside];
     if (self.buttonBackgroundImage) {
-        [button setBackgroundImage:buttonBackgroundImage forState:UIControlStateNormal];
+        [button setBackgroundImage:[buttonBackgroundImage resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)] forState:UIControlStateNormal];
         [button setTitleShadowColor:[UIColor darkTextColor] forState:UIControlStateNormal];
         [[button titleLabel] setShadowOffset:CGSizeMake(1, 1)];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
