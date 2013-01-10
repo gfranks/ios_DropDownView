@@ -24,5 +24,6 @@ DropDownView styled with DropDownViewStyleLoginAndPasswordInput with 2 buttons s
 ![Alt text](https://raw.github.com/gfranks/ios_DropDownView/master/Screenshots/DropDownViewScreenStyleLoginPassInputFull.png)
 
 DropDownView styled with DropDownViewStylePlainTextInput and DropDownViewStyleLoginAndPasswordInput with an additional message and 2 buttons set
+
 ![Alt text](https://raw.github.com/gfranks/ios_DropDownView/master/Screenshots/DropDownViewScreenStyleDefaultWithMessageFull.png)
 ![Alt text](https://raw.github.com/gfranks/ios_DropDownView/master/Screenshots/DropDownViewScreenStyleLoginPassInputWithMessageFull.png)
