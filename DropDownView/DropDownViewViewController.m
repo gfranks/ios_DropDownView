@@ -43,7 +43,7 @@
     [self.dropDownView setDelegate:self];
     
     // also be sure to set a button background or one will not be used
-    [self.dropDownView setButtonBackground:[UIImage imageNamed:@"btn"]];
+    [self.dropDownView setButtonBackground:[UIImage imageNamed:@"blueButtonHighlight"]];
     
     // set a gesture recognizer to dismiss view if DropDownView is tapped
     [self.dropDownView setGestureRecognizerForDismissal];
