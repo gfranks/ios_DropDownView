@@ -8,17 +8,22 @@ The view is positioned centered along the Y-axis.
 Send me an email at lgfz71@gmail.com if you have any questions, feedback, or would like to become a contributor.
 
 DropDownView styled with DropDownViewStyleDefault and no buttons set
-![Alt text](https://raw.github.com/gfranks/DropDownView/master/Screenshots/DropDownViewScreenStyleDefaultNoButtonsHalf.png)
-![Alt text](https://raw.github.com/gfranks/DropDownView/master/Screenshots/DropDownViewScreenStyleDefaultNoButtonsFull.png)
+![Alt text](https://raw.github.com/gfranks/ios_DropDownView/master/Screenshots/DropDownViewScreenStyleDefaultNoButtonsHalf.png)
+![Alt text](https://raw.github.com/gfranks/ios_DropDownView/master/Screenshots/DropDownViewScreenStyleDefaultNoButtonsFull.png)
 
 DropDownView styled with DropDownViewStyleDefault with 2 buttons set
-![Alt text](https://raw.github.com/gfranks/DropDownView/master/Screenshots/DropDownViewScreenStyleDefaultHalf.png)
-![Alt text](https://raw.github.com/gfranks/DropDownView/master/Screenshots/DropDownViewScreenStyleDefaultFull.png)
+![Alt text](https://raw.github.com/gfranks/ios_DropDownView/master/Screenshots/DropDownViewScreenStyleDefaultHalf.png)
+![Alt text](https://raw.github.com/gfranks/ios_DropDownView/master/Screenshots/DropDownViewScreenStyleDefaultFull.png)
 
 DropDownView styled with DropDownViewStylePlainTextInput with 2 buttons set
-![Alt text](https://raw.github.com/gfranks/DropDownView/master/Screenshots/DropDownViewScreenStyleInputHalf.png)
-![Alt text](https://raw.github.com/gfranks/DropDownView/master/Screenshots/DropDownViewScreenStyleInputFull.png)
+![Alt text](https://raw.github.com/gfranks/ios_DropDownView/master/Screenshots/DropDownViewScreenStyleInputHalf.png)
+![Alt text](https://raw.github.com/gfranks/ios_DropDownView/master/Screenshots/DropDownViewScreenStyleInputFull.png)
 
 DropDownView styled with DropDownViewStyleLoginAndPasswordInput with 2 buttons set
-![Alt text](https://raw.github.com/gfranks/DropDownView/master/Screenshots/DropDownViewScreenStyleLoginPassInputHalf.png)
-![Alt text](https://raw.github.com/gfranks/DropDownView/master/Screenshots/DropDownViewScreenStyleLoginPassInputFull.png)
+![Alt text](https://raw.github.com/gfranks/ios_DropDownView/master/Screenshots/DropDownViewScreenStyleLoginPassInputHalf.png)
+![Alt text](https://raw.github.com/gfranks/ios_DropDownView/master/Screenshots/DropDownViewScreenStyleLoginPassInputFull.png)
+
+DropDownView styled with DropDownViewStylePlainTextInput and DropDownViewStyleLoginAndPasswordInput with an additional message 
+and 2 buttons set
+![Alt text](https://raw.github.com/gfranks/ios_DropDownView/master/Screenshots/DropDownViewScreenStyleDefaultWithMessageFull.png)
+![Alt text](https://raw.github.com/gfranks/ios_DropDownView/master/Screenshots/DropDownViewScreenStyleLoginPassInputWithMessageFull.png)
