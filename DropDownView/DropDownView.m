@@ -30,7 +30,7 @@
 #define kMainViewFrameSizeWidth        320
 #define kMainViewFrameSizeHeight       140
 #define kBackgroundViewFrameOriginY    2
-#define kBackgroundViewFrameSizeHeight 135
+#define kBackgroundViewFrameSizeHeight 136
 
 #define kBottomDividerImageViewOriginY     138
 #define kBottomDividerImageViewFrameHeight 1

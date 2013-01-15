@@ -32,7 +32,7 @@
 
 - (void)showDropDownView {
     self.dropDownView = [[DropDownView alloc] initWithTitle:@"Sample"
-                                          withDropDownStyle:DropDownViewStyleLoginAndPasswordInput //supply style here, you can change this after initilization
+                                          withDropDownStyle:DropDownViewStylePlainTextInput //supply style here, you can change this after initilization
                                           cancelButtonTitle:@"Dismiss"
                                           otherButtonTitles:@"OK", nil];
     

@@ -127,7 +127,7 @@
 								<reference key="NSNextResponder" ref="547151085"/>
 								<int key="NSvFlags">1316</int>
 								<object class="NSPSMatrix" key="NSFrameMatrix"/>
-								<string key="NSFrameSize">{280, 36}</string>
+								<string key="NSFrameSize">{280, 39}</string>
 								<reference key="NSSuperview" ref="547151085"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="638497053"/>
@@ -170,7 +170,7 @@
 								<reference key="NSNextResponder" ref="547151085"/>
 								<int key="NSvFlags">1316</int>
 								<object class="NSPSMatrix" key="NSFrameMatrix"/>
-								<string key="NSFrame">{{0, 35}, {280, 13}}</string>
+								<string key="NSFrame">{{0, 38}, {280, 13}}</string>
 								<reference key="NSSuperview" ref="547151085"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="705009737"/>
@@ -199,7 +199,7 @@
 								<reference key="NSNextResponder" ref="705009737"/>
 								<int key="NSvFlags">1316</int>
 								<object class="NSPSMatrix" key="NSFrameMatrix"/>
-								<string key="NSFrameSize">{280, 36}</string>
+								<string key="NSFrameSize">{280, 39}</string>
 								<reference key="NSSuperview" ref="705009737"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="1043195051"/>
@@ -229,7 +229,7 @@
 								<reference key="NSNextResponder" ref="705009737"/>
 								<int key="NSvFlags">1316</int>
 								<object class="NSPSMatrix" key="NSFrameMatrix"/>
-								<string key="NSFrame">{{0, 36}, {280, 36}}</string>
+								<string key="NSFrame">{{0, 36}, {280, 39}}</string>
 								<reference key="NSSuperview" ref="705009737"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="627728232"/>
@@ -260,7 +260,7 @@
 								<reference key="NSNextResponder" ref="705009737"/>
 								<int key="NSvFlags">1316</int>
 								<object class="NSPSMatrix" key="NSFrameMatrix"/>
-								<string key="NSFrame">{{0, 36}, {280, 1}}</string>
+								<string key="NSFrame">{{0, 38}, {280, 1}}</string>
 								<reference key="NSSuperview" ref="705009737"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="959964277"/>
@@ -275,7 +275,7 @@
 								<reference key="NSNextResponder" ref="705009737"/>
 								<int key="NSvFlags">1316</int>
 								<object class="NSPSMatrix" key="NSFrameMatrix"/>
-								<string key="NSFrame">{{0, 71}, {280, 13}}</string>
+								<string key="NSFrame">{{0, 74}, {280, 13}}</string>
 								<reference key="NSSuperview" ref="705009737"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="554446135"/>
@@ -286,7 +286,7 @@
 							</object>
 						</array>
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
-						<string key="NSFrame">{{20, 39}, {280, 84}}</string>
+						<string key="NSFrame">{{20, 39}, {280, 91}}</string>
 						<reference key="NSSuperview" ref="72941842"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="720810899"/>
@@ -311,16 +311,17 @@
 					<object class="IBUIImageView" id="554446135">
 						<reference key="NSNextResponder" ref="72941842"/>
 						<int key="NSvFlags">290</int>
-						<string key="NSFrame">{{0, 132}, {320, 1}}</string>
+						<string key="NSFrame">{{0, 137}, {320, 1}}</string>
 						<reference key="NSSuperview" ref="72941842"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<reference key="IBUIBackgroundColor" ref="750540446"/>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 				</array>
-				<string key="NSFrameSize">{320, 135}</string>
+				<string key="NSFrameSize">{320, 140}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="757498197"/>
